@@ -20,7 +20,17 @@ Keycloak.handleAuthFromAccessToken = function handleAuthFromAccessToken(accessTo
 
   return {
     serviceData: serviceData,
-    options: {profile: {name: identity.name}}
+    options: {
+      profile: {
+        email: identity.email,
+        name: identity.name,
+        given_name: identity.given_name,
+        family_name: identity.family_name,
+        picture: identity.picture,
+        preferred_username: identity.preferred_username,
+        roles: identity.roles
+      }
+    }
   };
 };
 

@@ -1,8 +1,8 @@
 Package.describe({
-  name: 'hotello:keycloak-oauth',
+  name: 'caoool:keycloak-oauth',
   summary: 'Keycloak OAuth flow',
   version: '2.1.0',
-  git: 'https://github.com/hotello/meteor-accounts-auth0.git'
+  git: 'https://github.com/caoool/meteor-accounts-auth0.git'
 });
 
 Npm.depends({
