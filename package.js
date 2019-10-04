@@ -1,7 +1,7 @@
 Package.describe({
   name: 'caoool:keycloak-oauth',
   summary: 'Keycloak OAuth flow',
-  version: '2.1.0',
+  version: '2.1.1',
   git: 'https://github.com/caoool/meteor-accounts-auth0.git'
 });
 
