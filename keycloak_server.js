@@ -3,7 +3,7 @@ var Config = Npm.require('keycloak-connect/middleware/auth-utils/config');
 
 Keycloak = {};
 
-Keycloak.handleAuthFromAccessToken = function handleAuthFromAccessToken(accessToken, expiresAt) {
+Keycloak.handleAuthFromAccessToken = function handleAuthFromAccessToken(accessToken, refreshToken, expiresAt) {
   var whitelisted = ['email', 'name', 'given_name', 'family_name',
     'picture', 'preferred_username', 'roles'];
 
@@ -11,6 +11,7 @@ Keycloak.handleAuthFromAccessToken = function handleAuthFromAccessToken(accessTo
 
   var serviceData = {
     accessToken: accessToken,
+    refreshToken: refreshToken,
     expiresAt: expiresAt,
     id: identity.sub
   };
@@ -37,9 +38,10 @@ Keycloak.handleAuthFromAccessToken = function handleAuthFromAccessToken(accessTo
 OAuth.registerService('keycloak', 2, null, function(query) {
   var response = getTokenResponse(query);
   var accessToken = response.accessToken;
+  var refreshToken = response.refreshToken;
   var expiresIn = response.expiresIn;
 
-  return Keycloak.handleAuthFromAccessToken(accessToken, (+new Date) + (1000 * expiresIn));
+  return Keycloak.handleAuthFromAccessToken(accessToken, refreshToken, (+new Date) + (1000 * expiresIn));
 });
 
 // checks whether a string parses as JSON
@@ -80,6 +82,7 @@ var getTokenResponse = function (query) {
   }
 
   var kcAccessToken = responseContent.access_token.token;
+  var kcRefreshToken = responseContent.refresh_token.token;
   var kcExpires = responseContent.expires_in;
 
   if (!kcAccessToken) {
@@ -88,6 +91,7 @@ var getTokenResponse = function (query) {
   }
   return {
     accessToken: kcAccessToken,
+    refreshToken: kcRefreshToken,
     expiresIn: kcExpires
   };
 };
